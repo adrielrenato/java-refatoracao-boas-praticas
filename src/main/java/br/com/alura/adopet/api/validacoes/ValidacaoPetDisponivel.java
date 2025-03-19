@@ -13,9 +13,9 @@ public class ValidacaoPetDisponivel implements ValidacaoSolicitacaoAdocao {
     private PetRepository repository;
 
     public void validar(SolicitacaoAdocaoDto dto) {
-        var pet = repository.getReferenceById(dto.idPet());
+        var petAdotado = repository.existsByAdotadoTrue(dto.idPet());
 
-        if (pet.getAdotado()) {
+        if (petAdotado) {
             throw new ValidacaoException("Pet já foi adotado!");
         }
     }
