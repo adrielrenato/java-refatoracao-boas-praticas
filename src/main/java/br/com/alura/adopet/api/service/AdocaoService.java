@@ -3,12 +3,12 @@ package br.com.alura.adopet.api.service;
 import br.com.alura.adopet.api.dto.AprovacaoAdocaoDto;
 import br.com.alura.adopet.api.dto.ReprovacaoAdocaoDto;
 import br.com.alura.adopet.api.dto.SolicitacaoAdocaoDto;
-import br.com.alura.adopet.api.exception.ValidacaoException;
 import br.com.alura.adopet.api.model.Adocao;
 import br.com.alura.adopet.api.model.StatusAdocao;
 import br.com.alura.adopet.api.repository.AdocaoRepository;
 import br.com.alura.adopet.api.repository.PetRepository;
 import br.com.alura.adopet.api.repository.TutorRepository;
+import br.com.alura.adopet.api.validacoes.ValidacaoSolicitacaoAdocao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,11 +30,14 @@ public class AdocaoService {
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private List<ValidacaoSolicitacaoAdocao> validacoes;
+
     public void solicitar(SolicitacaoAdocaoDto dto) {
         var pet = petRepository.getReferenceById(dto.idPet());
         var tutor = tutorRepository.getReferenceById(dto.idTutor());
 
-        // Irei chamar as validações nesse exato momento
+        validacoes.forEach(v -> v.validar(dto));
 
         var adocao = new Adocao();
         adocao.setData(LocalDateTime.now());
