@@ -30,13 +30,15 @@ public class Pet {
 
     public Pet() {}
 
-    public Pet(TipoPet tipo, String nome, String raca, Integer idade, String cor, Float peso) {
+    public Pet(TipoPet tipo, String nome, String raca, Integer idade, String cor, Float peso, Abrigo abrigo) {
         this.tipo = tipo;
         this.nome = nome;
         this.raca = raca;
         this.idade = idade;
         this.cor = cor;
         this.peso = peso;
+        this.abrigo = abrigo;
+        this.adotado = false;
     }
 
     @Override
@@ -94,9 +96,5 @@ public class Pet {
 
     public Adocao getAdocao() {
         return adocao;
-    }
-
-    public void marcarComoNaoAdotado() {
-        this.adotado = false;
     }
 }

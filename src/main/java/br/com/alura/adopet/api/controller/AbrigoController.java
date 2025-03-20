@@ -1,11 +1,14 @@
 package br.com.alura.adopet.api.controller;
 
+import br.com.alura.adopet.api.dto.AbrigoDto;
 import br.com.alura.adopet.api.dto.CadastrarAbrigoDto;
 import br.com.alura.adopet.api.dto.CadastrarPetDto;
+import br.com.alura.adopet.api.dto.PetDto;
 import br.com.alura.adopet.api.exception.ValidacaoException;
 import br.com.alura.adopet.api.model.Abrigo;
 import br.com.alura.adopet.api.model.Pet;
 import br.com.alura.adopet.api.service.AbrigoService;
+import br.com.alura.adopet.api.service.PetService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +25,11 @@ public class AbrigoController {
     @Autowired
     private AbrigoService service;
 
+    @Autowired
+    private PetService petService;
+
     @GetMapping
-    public ResponseEntity<List<Abrigo>> listar() {
+    public ResponseEntity<List<AbrigoDto>> listar() {
         return ResponseEntity.ok(this.service.listar());
     }
 
@@ -40,7 +46,7 @@ public class AbrigoController {
     }
 
     @GetMapping("/{idOuNome}/pets")
-    public ResponseEntity<List<Pet>> listarPets(@PathVariable String idOuNome) {
+    public ResponseEntity<List<PetDto>> listarPets(@PathVariable String idOuNome) {
         try {
             var pets = this.service.listarPets(idOuNome);
 
@@ -54,7 +60,8 @@ public class AbrigoController {
     @Transactional
     public ResponseEntity<String> cadastrarPet(@PathVariable String idOuNome, @RequestBody @Valid CadastrarPetDto dto) {
         try {
-            this.service.cadastrarPet(idOuNome, dto);
+            var abrigo = this.service.carregaAbrigo(idOuNome);
+            this.petService.cadastrarPet(abrigo, dto);
 
             return ResponseEntity.ok().build();
         } catch (EntityNotFoundException e) {

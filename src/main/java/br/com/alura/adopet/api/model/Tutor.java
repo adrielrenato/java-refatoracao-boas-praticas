@@ -1,5 +1,7 @@
 package br.com.alura.adopet.api.model;
 
+import br.com.alura.adopet.api.dto.AtualizarTutorDto;
+import br.com.alura.adopet.api.dto.CadastrarTutorDto;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -17,15 +19,21 @@ public class Tutor {
     private String telefone;
     private String email;
 
-    @OneToMany(mappedBy = "tutor", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "tutor")
     private List<Adocao> adocoes;
 
     public Tutor() {}
 
-    public Tutor(String nome, String email, String telefone) {
-        this.nome = nome;
-        this.email = email;
-        this.telefone = telefone;
+    public Tutor(CadastrarTutorDto dto) {
+        this.nome = dto.nome();
+        this.email = dto.email();
+        this.telefone = dto.telefone();
+    }
+
+    public void atualizarDados(AtualizarTutorDto dto) {
+        this.nome = dto.nome();
+        this.email = dto.email();
+        this.telefone = dto.telefone();
     }
 
     @Override

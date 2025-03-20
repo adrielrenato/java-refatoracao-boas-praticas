@@ -19,14 +19,12 @@ public class TutorService {
     public void cadastrar(CadastrarTutorDto dto) {
         validacao.validar(dto);
 
-        var tutor = new Tutor(dto.nome(), dto.email(), dto.telefone());
-
-        repository.save(tutor);
+        repository.save(new Tutor(dto));
     }
 
     public void atualizar(AtualizarTutorDto dto) {
-        var tutor = new Tutor(dto.nome(), dto.email(), dto.telefone());
+        var tutor = repository.getReferenceById(dto.id());
 
-        repository.save(tutor);
+        tutor.atualizarDados(dto);
     }
 }
