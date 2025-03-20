@@ -38,6 +38,7 @@ public class TutorController {
     @Transactional
     public ResponseEntity<String> atualizar(@RequestBody @Valid AtualizarTutorDto dto) {
         this.tutorService.atualizar(dto);
+
         return ResponseEntity.ok().build();
     }
 
