@@ -2,10 +2,8 @@ package br.com.alura.adopet.api.service;
 
 import br.com.alura.adopet.api.dto.AbrigoDto;
 import br.com.alura.adopet.api.dto.CadastrarAbrigoDto;
-import br.com.alura.adopet.api.dto.CadastrarPetDto;
 import br.com.alura.adopet.api.dto.PetDto;
 import br.com.alura.adopet.api.model.Abrigo;
-import br.com.alura.adopet.api.model.Pet;
 import br.com.alura.adopet.api.repository.AbrigoRepository;
 import br.com.alura.adopet.api.repository.PetRepository;
 import br.com.alura.adopet.api.util.ValidacaoUtil;

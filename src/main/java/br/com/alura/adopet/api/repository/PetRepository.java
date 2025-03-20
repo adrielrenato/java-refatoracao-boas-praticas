@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface PetRepository extends JpaRepository<Pet, Long> {
-    boolean existsByAdotadoTrue(Long id);
+    boolean existsByIdAndAdotadoTrue(Long id);
     List<Pet> findByAdotadoFalse();
     List<Pet> findByAbrigo(Abrigo abrigo);
 }
